@@ -12,7 +12,7 @@ class StatusEnum(PyEnum):
     OFFER_RECEIVED = "offer_received"
     WITHDRAWN = "withdrawn"
 
-class ProcessModel(Base):
+class Process(Base):
     __tablename__ = 'processes'
     id = Column(Integer, primary_key=True)
     job_number = Column(String(50), nullable=False)
@@ -22,9 +22,9 @@ class ProcessModel(Base):
     description = Column(Text, nullable=True)
 
     user_id = Column(Integer, ForeignKey('users.id'))
-    owner = relationship("UserModel", back_populates="processes")
+    owner = relationship("User", back_populates="processes")
 
     company_id = Column(Integer, ForeignKey('companies.id'))
-    company = relationship("CompanyModel", back_populates="processes")
+    company = relationship("Company", back_populates="processes")
 
-    changes = relationship("ChangelogModel", back_populates="owner")
+    changes = relationship("Changelog", back_populates="owner")

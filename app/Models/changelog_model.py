@@ -4,7 +4,7 @@ from sqlalchemy.sql import func
 from app.models.process_model import StatusEnum
 from app.database import Base
 
-class ChangelogModel(Base):
+class Changelog(Base):
     __tablename__ = 'changelog'
     id = Column(Integer, primary_key=True)
     changed_to = Column(SqlEnum(StatusEnum), nullable=False)
@@ -12,4 +12,4 @@ class ChangelogModel(Base):
 
     process_id = Column(Integer, ForeignKey('processes.id'))
 
-    owner = relationship("ProcessModel", back_populates="changes")
+    owner = relationship("Process", back_populates="changes")

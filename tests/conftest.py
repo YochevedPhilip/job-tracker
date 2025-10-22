@@ -52,8 +52,8 @@ def client():
 @pytest.fixture
 def user_fixture(session):
 
-    from app.models.user_model import UserModel
-    user = UserModel(name="Test User", email="user@example.com", password="pass123")
+    from app.models.user_model import User
+    user = User(name="Test User", email="user@example.com", password="pass123")
     session.add(user)
     session.commit()
     return user
@@ -62,8 +62,8 @@ def user_fixture(session):
 @pytest.fixture
 def company_fixture(session, user_fixture):
 
-    from app.models.company_model import CompanyModel
-    company = CompanyModel(name="Test Company", user_id=user_fixture.id)
+    from app.models.company_model import Company
+    company = Company(name="Test Company", user_id=user_fixture.id)
     session.add(company)
     session.commit()
     return company
@@ -72,8 +72,8 @@ def company_fixture(session, user_fixture):
 @pytest.fixture
 def process_fixture(session, company_fixture, user_fixture):
 
-    from app.models.process_model import ProcessModel
-    process = ProcessModel(job_number="Interview Process", company_id=company_fixture.id, user_id=user_fixture.id)
+    from app.models.process_model import Process
+    process = Process(job_number="Interview Process", company_id=company_fixture.id, user_id=user_fixture.id)
     session.add(process)
     session.commit()
     return process
