@@ -1,7 +1,7 @@
 import pytest
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
-from app.database import Base
+from app.database import Base, get_db
 from fastapi.testclient import TestClient
 from app.main import app
 
@@ -11,8 +11,11 @@ from app.main import app
 
 @pytest.fixture(scope="session")
 def engine():
+    engine = create_engine(
+        "sqlite:///:memory:",
+        connect_args={"check_same_thread": False}
+    )
 
-    engine = create_engine("sqlite:///:memory:", echo=False, future=True)
     Base.metadata.create_all(bind=engine)
     yield engine
     Base.metadata.drop_all(bind=engine)
@@ -21,17 +24,19 @@ def engine():
 
 @pytest.fixture(scope="function")
 def session(engine):
-
     connection = engine.connect()
     transaction = connection.begin()
 
-    SessionLocal = sessionmaker(bind=connection, autoflush=False, autocommit=False)
-    session = SessionLocal()
+    session_local = sessionmaker(bind=connection, autoflush=False, autocommit=False)
+    session = session_local()
 
-    yield session
-    session.close()
-    transaction.rollback()
-    connection.close()
+    try:
+        yield session
+    finally:
+        session.close()
+        transaction.rollback()
+        connection.close()
+
 
 
 # -----------------------------------------------------------------------------
@@ -48,6 +53,15 @@ def client():
 # -----------------------------------------------------------------------------
 # SAMPLE DATA FIXTURES
 # -----------------------------------------------------------------------------
+@pytest.fixture(autouse=True)
+def override_get_db(session):
+
+    def _get_test_db():
+        yield session
+
+    app.dependency_overrides[get_db] = _get_test_db
+    yield
+    app.dependency_overrides.clear()
 
 @pytest.fixture
 def user_fixture(session):
@@ -77,3 +91,4 @@ def process_fixture(session, company_fixture, user_fixture):
     session.add(process)
     session.commit()
     return process
+
