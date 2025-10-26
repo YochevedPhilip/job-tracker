@@ -1,6 +1,6 @@
 # Job Application Tracker (Backend)
 
-A backend system built with **FastAPI**, **SQLAlchemy**, and **Python 3.11+**.
+A backend system built with **FastAPI**, **SQLAlchemy**, and **Python 3.13+**.
 
 The project was developed as a learning and portfolio project to demonstrate backend architecture and clean code practices.  
 It includes a complete database layer, API layer, and business logic foundation.
@@ -8,15 +8,15 @@ It includes a complete database layer, API layer, and business logic foundation.
 ---
 
 ## Project Status
-- Database models and relationships (Models) — completed  
-- Schemas and repositories — completed  
-- API layer and core business logic — completed  
+- Database models and relationships (Models) - completed  
+- Schemas and repositories - completed  
+- API layer and core business logic - completed  
 - Planned extensions: JWT authentication, simple frontend, and reporting features  
 
 ---
 
 ## Tech Stack
-- Python 3.11+  
+- Python 3.13+  
 - FastAPI  
 - SQLAlchemy  
 - Pydantic  
