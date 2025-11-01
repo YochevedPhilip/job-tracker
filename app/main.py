@@ -1,13 +1,14 @@
 from fastapi import FastAPI
 from app.database import engine
 from app import models
-from app.controller import user_router
+from app.controller import user_router, company_router
 
 
 models.Base.metadata.create_all(bind=engine)
 
 app = FastAPI(title="JobTracker API")
 app.include_router(user_router.router)
+app.include_router(company_router.router)
 
 if __name__ == "__main__":
     import uvicorn
