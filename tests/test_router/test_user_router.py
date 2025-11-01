@@ -6,11 +6,14 @@ from fastapi import status
 def test_create_user_success(client):
     user_data = {
         "name": "New User",
-        "email": "newuser3@example.com",
+        "email": "newuser6@example.com",
         "password": "strongpass"
     }
 
+
     response = client.post("/users/", json=user_data)
+    print("\nRESPONSE JSON:", response.json())
+
     assert response.status_code == status.HTTP_201_CREATED
     data = response.json()
     assert data["name"] == user_data["name"]

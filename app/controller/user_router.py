@@ -68,7 +68,6 @@ def update_user(
     user_id : int,
     user_update : UserUpdate,
     db: Session = Depends(get_db)
-
 ):
     repo = UserRepository(db)
     user = repo.get_by_id(user_id)
@@ -90,7 +89,7 @@ def delete_user(
     succes = repo.delete(user_id)
     if not succes:
         raise HTTPException(status_code = 404, detail="User not found")
-    return
+    return None
 
 
 
