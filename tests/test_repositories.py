@@ -1,4 +1,3 @@
-import pytest
 from app.repositories.user_repository import UserRepository
 from app.repositories.company_repository import CompanyRepository
 from app.repositories.process_repository import ProcessRepository
